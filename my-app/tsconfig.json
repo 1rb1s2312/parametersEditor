@@ -1,7 +1,21 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "target": "esnext",                      // Целевую версию JavaScript используем последнюю доступную
+    "useDefineForClassFields": true,         // Использует поля класса согласно спецификации классов TC39
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Включаем библиотеки DOM и новейшие возможности ES
+    "allowJs": false,                        // Не разрешаем смешивать JS и TS
+    "skipLibCheck": true,                    // Пропускаем проверку сторонних библиотек
+    "esModuleInterop": true,                 // Поддержка межмодульного взаимодействия
+    "allowSyntheticDefaultImports": true,   // Разрешить импортирование по умолчанию
+    "strict": true,                          // Включение всех строгих проверок
+    "forceConsistentCasingInFileNames": true,// Требовать одинаковое написание имен файлов
+    "noFallthroughCasesInSwitch": true,     // Предупреждать о пропущенных случаях switch-case
+    "module": "esnext",                     // Модули используют ES-modules
+    "moduleResolution": "node",              // Используется алгоритм разрешения модулей Node.js
+    "resolveJsonModule": true,               // Возможность разрешать JSON-модули
+    "isolatedModules": true,                 // Каждый файл компилируется отдельно
+    "noEmit": true,                          // Отключаем создание файлов .js при разработке
+    "jsx": "react-jsx"                       // Тип рендера для JSX — React
+  },
+  "include": ["src"]                         // Включаем исходники из папки src
 }

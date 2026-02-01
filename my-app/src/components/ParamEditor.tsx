@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface Param {
+export interface Param {
   id: number;
   name: string;
   type: 'string';
@@ -13,7 +13,6 @@ interface ParamValue {
 
 interface Model {
   paramValues: ParamValue[];
-  colors?: unknown[];
 }
 
 interface Props {
@@ -29,7 +28,7 @@ class ParamEditor extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      values: {}, 
+      values: {},
     };
 
     props.model.paramValues.forEach((val) => {
@@ -53,13 +52,15 @@ class ParamEditor extends React.Component<Props, State> {
   };
 
   getModel(): Model {
-    return {
-      paramValues: Object.entries(this.state.values).map(([key, value]) => ({
-        paramId: parseInt(key, 10),
-        value,
-      })),
-    };
-  }
+  return {
+    paramValues: Object.keys(this.state.values)
+      .map((key: string) => ({ 
+        paramId: +key,
+        value: this.state.values[parseInt(key)], 
+      }))
+      .filter((item) => item.value !== ''),
+  };
+}
 
   render() {
     return (
@@ -68,7 +69,7 @@ class ParamEditor extends React.Component<Props, State> {
           <ParamInput
             key={param.id}
             param={param}
-            value={this.state.values[param.id] ?? ''}
+            value={this.state.values[param.id] || ''}
             onChange={this.updateValue}
           />
         ))}
@@ -77,17 +78,16 @@ class ParamEditor extends React.Component<Props, State> {
   }
 }
 
-const ParamInput: React.FC<{
+const ParamInput: React.FunctionComponent<{
   param: Param;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({ param, value, onChange }) => {
   return (
     <div style={{ marginBottom: '8px' }}>
-      <label htmlFor={`param-${param.id}`}>{param.name}</label>
-      <br />
+      <label htmlFor={`param-${param.id}`}>{param.name}:</label> {} 
       <input
-        data-param-id={param.id.toString()}
+        data-param-id={`${param.id}`} 
         type="text"
         value={value}
         onChange={onChange}
